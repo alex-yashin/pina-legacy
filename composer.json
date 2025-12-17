@@ -1,0 +1,27 @@
+{
+  "name": "alex-yashin/pina-legacy",
+  "keywords": ["php"],
+  "license": "MIT",
+  "homepage": "https://github.com/alex-yashin/pina-legacy/",
+  "support": {
+    "issues": "https://github.com/alex-yashin/pina-legacy/issues",
+    "source": "https://github.com/alex-yashin/pina-legacy/"
+  },
+  "authors": [
+    {
+      "name": "Alex Yashin",
+      "email": "alex-yashin@ya.ru"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "pinahq/framework": "*",
+    "smarty/smarty": "2.6.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "PinaLegacy\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}

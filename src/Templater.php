@@ -1,6 +1,6 @@
 <?php
 
-namespace Pina\Legacy;
+namespace PinaLegacy;
 
 use Pina\App;
 use Pina\Config;
@@ -51,7 +51,7 @@ class Templater extends Smarty
         #$this->compile_check = false;
 
         $this->register_resource('pina', [
-            "\Pina\Legacy\Templater",
+            "\PinaLegacy\Templater",
             "getTemplate",
             "getTemplateTimestamp",
             "getTemplateSecure",
@@ -59,7 +59,7 @@ class Templater extends Smarty
         ]);
 
         $this->register_resource('email', [
-            "\Pina\Legacy\Templater",
+            "\PinaLegacy\Templater",
             "getEmailTemplate",
             "getEmailTemplateTimestamp",
             "getEmailTemplateSecure",

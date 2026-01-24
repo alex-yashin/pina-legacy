@@ -3,6 +3,7 @@
 namespace PinaLegacy;
 
 use Pina\App;
+use Pina\EmptyContent;
 use Pina\Response;
 use Pina\Url;
 
@@ -53,7 +54,8 @@ class TemplaterHandler extends RequestHandler
             if (!empty($params['fallback'])) {
                 return $this->fallback($params);
             }
-            return Response::forbidden();
+            $r = Response::forbidden();
+            return $isExternal ? $r : $r->setContent(new EmptyContent());
         }
 
         $template = $this->controller . '!' . $this->action . '!' . Request::input('display');

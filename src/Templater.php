@@ -4,6 +4,8 @@ namespace PinaLegacy;
 
 use Pina\App;
 use Pina\Config;
+use Pina\Controls\Control;
+use Pina\Layouts\EmptyLayout;
 use Pina\Url;
 use Smarty;
 
@@ -120,7 +122,10 @@ class Templater extends Smarty
 
         if (App::router()->exists($params['get'], 'get')) {
             $result = App::router()->run($params['get'], 'get', $params);
-            return $result->drawWithWrappers();
+            if ($result instanceof Control) {
+                return $result->setLayout(App::make(EmptyLayout::class))->drawWithWrappers();
+            }
+            return '';
         } else {
             $result = Request::internal(new RequestHandler($params['get'], 'get', $params))->fetchContent();
         }

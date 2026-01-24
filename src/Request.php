@@ -2,6 +2,7 @@
 
 namespace PinaLegacy;
 
+use Pina\App;
 use Pina\Arr;
 use Pina\Url;
 
@@ -176,7 +177,7 @@ class Request
     public static function getPlace($place)
     {
         if (empty(self::$stack)) {
-            return static::$places[$place] ?? '';
+            return static::$places[$place] ?? static::getAppPlace($place);
         }
 
         $isolationLevel = 0;
@@ -189,10 +190,15 @@ class Request
         }
 
         if (!isset(self::$stack[$isolationLevel])) {
-            return '';
+            return static::getAppPlace($place);
         }
 
         return self::$stack[$isolationLevel]->getPlace($place);
+    }
+
+    protected static function getAppPlace($place)
+    {
+        return App::place($place)->make([]);
     }
 
 }

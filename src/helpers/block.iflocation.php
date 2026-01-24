@@ -1,6 +1,6 @@
 <?php
 
-use Pina\Legacy\Route;
+use PinaLegacy\Route;
 use Pina\Url;
 
 function smarty_block_iflocation($params, $content, &$view, &$repeat) 
@@ -16,7 +16,7 @@ function smarty_block_iflocation($params, $content, &$view, &$repeat)
         return '';
     }
 
-    $resource = Url::trim(\Pina\App::resource());
+    $resource = Url::trim(\Pina\App::resource('@'));
 
     if (strpos($resource, $needed) !== 0)
         return '';

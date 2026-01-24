@@ -10,6 +10,6 @@ function smarty_block_content($params, $content, &$view, &$repeat)
         return '';
     }
     
-    \Pina\Legacy\Request::setPlace($params['name'], $content);
+    \PinaLegacy\Request::setPlace($params['name'], $content);
     return '';
 }

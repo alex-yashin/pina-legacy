@@ -1,8 +1,8 @@
 <?php
 
 use Pina\App;
-use Pina\Legacy\Composer;
-use Pina\Legacy\Route;
+use PinaLegacy\Composer;
+use PinaLegacy\Route;
 use Pina\Url;
 
 function smarty_block_form($ps, $content, &$view, &$repeat)
@@ -68,7 +68,7 @@ function smarty_block_form($ps, $content, &$view, &$repeat)
     }
     if (!empty($ps["redirect"])) {
         $origRedirect = $ps["redirect"] == '#' || parse_url($ps['redirect'], PHP_URL_HOST);
-        $r .= ' data-redirect="' . ($origRedirect ? $ps['redirect'] : App::link($ps['redirect'], [], \Pina\Legacy\Request::resource())) . '"';
+        $r .= ' data-redirect="' . ($origRedirect ? $ps['redirect'] : App::link($ps['redirect'], [], \PinaLegacy\Request::resource())) . '"';
     }
     $r .= '>';
     $r .= $add;

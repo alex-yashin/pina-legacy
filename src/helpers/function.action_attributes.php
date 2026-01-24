@@ -1,6 +1,6 @@
 <?php
 
-use Pina\Legacy\Route;
+use PinaLegacy\Route;
 use Pina\Url;
 
 function smarty_function_action_attributes($params, &$view)

@@ -3,7 +3,7 @@
 function smarty_function_link($params, &$view)
 {
     if (empty($params['get'])) {
-        $params['get'] = \Pina\App::resource();
+        $params['get'] = \Pina\App::resource('@');
     }
 
     $assign = '';
@@ -24,7 +24,7 @@ function smarty_function_link($params, &$view)
         }
     }
 
-    $link = \Pina\App::link($params['get'], $params, \Pina\Legacy\Request::resource());
+    $link = \Pina\App::link($params['get'], $params, \PinaLegacy\Request::resource());
 
     if ($assign) {
         $view->assign($assign, $link);

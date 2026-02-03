@@ -46,7 +46,8 @@ class TemplaterHandler extends RequestHandler
     public function run($isExternal = true)
     {
         if (empty($this->module)) {
-            return Response::notFound();
+            $r = Response::notFound();
+            return $isExternal ? $r : $r->setContent(new EmptyContent());
         }
         $params = $this->all();
 

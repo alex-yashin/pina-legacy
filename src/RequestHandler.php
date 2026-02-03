@@ -75,7 +75,7 @@ class RequestHandler
     public function getPlace($place)
     {
         if (!isset($this->places[$place])) {
-            return '';
+            return App::place($place)->make([]);
         }
         return $this->places[$place];
     }

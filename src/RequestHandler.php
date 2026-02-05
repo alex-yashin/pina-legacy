@@ -214,12 +214,20 @@ class RequestHandler
 
         $handler = $this->module->getPath() . '/' . Url::handler($this->controller, $this->action);
         if (!is_file($handler . ".php")) {
-            return $this->notFound();
+            $r = $this->notFound();
+            if (!$isExternal) {
+                $r->setContent(new EmptyContent());
+            }
+            return $r;
         }
         $r = include $handler . ".php";
 
         if (empty($r)) {
-            return Response::ok();
+            $r = Response::ok();
+            if (!$isExternal) {
+                $r->setContent(new EmptyContent());
+            }
+            return $r;
         }
 
         if ($r instanceof ResponseInterface) {
@@ -232,7 +240,6 @@ class RequestHandler
             }
             return $r;
         }
-
         $content = $this->createResponseContent($r, $this->controller, $this->action, $isExternal);
         return Response::ok()->setContent($content);
     }

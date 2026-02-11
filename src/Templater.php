@@ -3,15 +3,19 @@
 namespace PinaLegacy;
 
 use Pina\App;
+use Pina\BadRequestException;
 use Pina\Config;
 use Pina\Controls\Control;
+use Pina\ForbiddenException;
 use Pina\Layouts\EmptyLayout;
+use Pina\Log;
+use Pina\NotFoundException;
 use Pina\Url;
 use Smarty;
 
 class Templater extends Smarty
 {
-    protected array $strict_resources = [];
+    protected $strict_resources = [];
 
     public function __construct()
     {
@@ -119,15 +123,25 @@ class Templater extends Smarty
         $vars_backup = $view->_tpl_vars;
 
         $params['get'] = Route::resource($params['get'], $params);
-
-        if (App::router()->exists($params['get'], 'get')) {
-            $result = App::router()->run($params['get'], 'get', $params);
-            if ($result instanceof Control) {
-                return $result->setLayout(App::make(EmptyLayout::class))->drawWithWrappers();
+        try {
+            if (App::router()->exists($params['get'], 'get')) {
+                $result = App::router()->run($params['get'], 'get', $params);
+                if ($result instanceof Control) {
+                    return $result->setLayout(App::make(EmptyLayout::class))->drawWithWrappers();
+                }
+                return '';
+            } else {
+                $result = Request::internal(new RequestHandler($params['get'], 'get', $params))->fetchContent();
             }
+        } catch (BadRequestException $e) {
             return '';
-        } else {
-            $result = Request::internal(new RequestHandler($params['get'], 'get', $params))->fetchContent();
+        } catch (NotFoundException $e) {
+            return '';
+        } catch (ForbiddenException $e) {
+            return '';
+        } catch (\Exception $e) {
+            Log::error('php', $e->getMessage());
+            return '';
         }
 
         $view->_tpl_vars = $vars_backup;
